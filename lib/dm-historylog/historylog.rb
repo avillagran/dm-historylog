@@ -11,7 +11,7 @@ module DataMapper
                 after   :destroy,   :history_destroy
                 
                 def history_create
-                    Historial.do Historial::CREACION, self
+                    Historial.do Historial::CREATED, self
                 end
 
                 def history_save
@@ -19,13 +19,13 @@ module DataMapper
                 end
 
                 def history_update
-                    if self.deleted_at.nil? && self.historylog.last.estado_actual != self.attributes.to_json
-                        Historial.do Historial::ACTUALIZACION, self
+                    if self.deleted_at.nil? && self.historylog.last.current_state != self.attributes.to_json
+                        Historial.do Historial::UPDATED, self
                     end
                 end
 
                 def history_destroy
-                    Historial.do Historial::ELIMINACION, self
+                    Historial.do Historial::DELETED, self
                 end
 
                 def historylog
