@@ -26,13 +26,13 @@ Run the install generator:
 
     rails g historylog:install
 
-Create historylog table:
+Create `historylog` table:
 
     rake db:autoupgrade
 
 ### Using
 
-Add include DataMapper::Historylog on your models
+Add `include DataMapper::Historylog` on your models
 
     include DataMapper::Historylog
 
@@ -49,7 +49,7 @@ Add include DataMapper::Historylog on your models
       property :deleted_at, ParanoidDateTime
     end
 
-Every action with Example model (Save, Create, Update and Delete) will generate a new record in historylog table.
+Every action with Example model (`save`, `create`, `update` and `destroy`) will generate a new record in `historylog` table.
 
 TODO
 ----
