@@ -23,14 +23,17 @@ Usage
 ### Installation
 
 Run the install generator:
+
     rails g historylog:install
 
 Create historylog table:
+
     rake db:autoupgrade
 
 ### Using
 
 Add include DataMapper::Historylog on your models
+
     include DataMapper::Historylog
 
 ### Example:
