@@ -19,7 +19,7 @@ Gem::Specification.new do |s|
   s.require_paths = ["lib"]
 
   s.add_dependency('rails',   '>= 3.0.0')
-  s.add_dependency('dm-core', '>= 1.0.0'    )
+  s.add_dependency('dm-core', '>= 1.0.0')
     #s.add_dependency('will_paginate', '>= 2.3.15')
   #s.add_dependency('meta_search',   '>= 1.0.1')
   

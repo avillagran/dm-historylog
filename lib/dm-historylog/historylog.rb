@@ -5,23 +5,33 @@ module DataMapper
 
         def self.included(base)
             base.class_eval do
-                after   :create,    :history_create
-                after   :save,      :history_save
-                after   :update,    :history_update
-                after   :destroy,   :history_destroy
+                after    :create,    :history_create
+                after    :save,      :history_save_after                
+                #before   :save,      :history_save_before
+                before   :update,    :history_update
+                before   :destroy,   :history_destroy
                 
                 def history_create
                     Historial.do Historial::CREATED, self
                 end
 
-                def history_save
-                    self.historylog.empty? ? self.history_create : self.history_update
+                def history_save_before
+                    #self.history_update unless self.new?
                 end
 
+                def history_save_after
+                    # Fewer queries... [avillagran]
+                    self.history_create if self.new?
+                    #self.historylog.empty? ? self.history_create : self.history_update
+                end
+
+
                 def history_update
-                    if self.deleted_at.nil? && self.historylog.last.current_state != self.attributes.to_json
-                        Historial.do Historial::UPDATED, self
-                    end
+                    # Fewer queries... [avillagran]
+                    #if self.deleted_at.nil? && self.historylog.last.current_state != self.attributes.to_json
+                    
+                    Historial.do Historial::UPDATED, self if (self.attributes.include?(:deleted_at) ? self.deleted_at.blank? : true)
+                    #end
                 end
 
                 def history_destroy
